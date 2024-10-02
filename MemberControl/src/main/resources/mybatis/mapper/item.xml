@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.example.mbc.itemDAO">
+
+<select id="selectpackage" resultType="com.example.mbc.itemDTO">
+select item_name,period
+	from package where package_id=#{param1}
+</select>
+<select id="selectitem" resultType="com.example.mbc.itemDTO">
+select id,name,price,discount_price,composition,origin from item where id=#{param1}
+
+</select>
+<select id="getImagePath" resultType="string" parameterType="int">
+    SELECT image_path FROM item WHERE id =#{param1}
+</select>
+
+
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mbc.replyDAO">
+	<insert id="insertreply">
+		insert into reply set par_id=#{param1},content=#{param2},
+			writer=(select id from member where userid=#{param3})	
+	</insert>
+	<select id="selectreply" resultType="com.example.mbc.replyDTO">
+		select a.content,a.id,b.userid,a.created,a.updated 
+		from reply a
+		inner join board c on a.par_id=c.id
+		inner join member b on a.writer=b.id
+		where c.id=#{param1}
+	</select>
+	<delete id="deletereply">
+		delete from reply where id=#{param1}
+	</delete>
+		<update id="updatereply">
+		UPDATE reply 
+		SET content = #{param2}
+		WHERE par_id = #{param1} 
+  		AND id = #{param4} 
+  		AND writer = (SELECT id FROM member WHERE userid = #{param3})
+	</update>
+	<select id="comment" resultType="com.example.mbc.replyDTO">
+		SELECT a.id, a.par_id, a.content, b.userid, a.created,a.updated
+		FROM reply a,member b
+  		where a.par_id=#{param1} and a.writer=b.id;
+
+	</select>  
+ 
+</mapper>
